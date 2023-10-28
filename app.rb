@@ -32,9 +32,8 @@ get('/:from_currency/:to_currency') do
   if @original_currency == @destination_currency
     @conversion_rate = 1
   else
-    data = fetch_api_data('live', source: @original_currency, currencies: @destination_currency)
-    quote_key = "#{@original_currency}#{@destination_currency}"
-    @conversion_rate = data['quotes'].fetch(quote_key, nil)
+    data = fetch_api_data('convert', from: @original_currency, to: @destination_currency, amount: 1)
+    @conversion_rate = data['result']
   end
   
   erb(:conversion)
